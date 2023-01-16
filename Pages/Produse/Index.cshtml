@@ -1,0 +1,85 @@
+﻿@page "/{id:int?}"
+@model Magazin_Cosmetice.Pages.Produse.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Gaseste denumirea produsului:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DenumireSort">
+                    @Html.DisplayNameFor(model => model.Produs[0].Denumire)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produs[0].Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produs[0].Pret)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produs[0].DataFabricarii)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Produs[0].CategoriiProdus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProdusD.Produse)
+        {
+
+            string selectedRow = "";
+            if (item.ID == Model.ProdusID) { selectedRow = "table-success"; }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Denumire)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pret)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFabricarii)
+                </td>
+               
+                <td>
+                    @{
+                        foreach (var category in item.CategoriiProdus)
+                        {
+                            @category.Categorie.ID @: @category.Categorie.NumeCategorie <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

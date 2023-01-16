@@ -1,0 +1,44 @@
+﻿@page
+@model Magazin_Cosmetice.Pages.Cumparaturi.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cumparare[0].Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cumparare[0].Produs)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Cumparare) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.NumeClient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Produs.Denumire)
+            </td>
+            
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
